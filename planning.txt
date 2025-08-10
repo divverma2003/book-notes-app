@@ -1,0 +1,28 @@
+Techstack:
+1. Express + sessions
+2. Nodejs
+3. PostgresSQL
+4. Passport
+5. Bcrypt
+
+-----------------------------------------------------------------------------------------
+
+* API For Book Cover:
+    The URL pattern to access book covers is:
+
+    https://covers.openlibrary.org/b/$key/$value-$size.jpg
+
+    Where:
+    1. key can be any one of ISBN, OCLC, LCCN, OLID and ID (case-insensitive)
+    2. value is the value of the chosen key
+    3. size can be one of S, M and L for small, medium and large respectively.
+
+Website Structure
+-----------------------------------------------------------------------------------------
+1. Landing Page (/) --> Has a simple log in screen (/login) /sign up screen (/register) + a button to navigate to user list (/user)
+2. (/login) --> Form with a email + password field (POST) + upon login, takes user to /auth/user/[id]
+2. (/register) --> Form with a name, email + password field + phone number, an optional profile picture field + an optional favorite genre drop-down field (POST)
+3. /(user) --> Grid page with a list of users, upon clicking will take us to /user/[id]
+4. /user/[id] --> Page with user's book reviews, here the user's profile info will be visible + a list with a short description of their book reviews will be available + search bar + button that takes them to each corresponding review (/user/[id]/[isbn])
+5. /user/[id]/[isbn] --> user's full fledged book review
+6. /auth/user/[id]
