@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= book ? 'Edit Book' : 'Add Book' %> - Book Notes App</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <%- include('partials/authHeader', { user: user }) %>
+
+  <main class="form-container">
+    <h2 class="form-title"><%= book ? 'Edit Book' : 'Add Book' %></h2>
+
+    <% if (error) { %>
+      <p class="form-error"><%= error %></p>
+    <% } %>
+
+    <form
+      action="<%= book ? '/auth/edit-book' : '/auth/add-book' %>"
+      method="POST"
+      class="form"
+    >
+      <% if (book) { %>
+        <input type="hidden" name="book_id" value="<%= book.book_id %>" />
+      <% } %>
+
+      <label for="isbn13">ISBN-13</label>
+      <input
+        type="text"
+        id="isbn13"
+        name="isbn13"
+        value="<%= book ? book.isbn13 : '' %>"
+        maxlength="13"
+        pattern="\d{13}"
+        required
+        placeholder="13-digit ISBN"
+      />
+
+      <label for="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= book ? book.title : '' %>"
+        required
+      />
+
+      <label for="author">Author</label>
+      <input
+        type="text"
+        id="author"
+        name="author"
+        value="<%= book ? book.author : '' %>"
+        required
+      />
+
+      <label for="genre">Genre</label>
+      <input
+        type="text"
+        id="genre"
+        name="genre"
+        value="<%= book ? book.genre : '' %>"
+      />
+
+      <label for="page_count">Page Count</label>
+      <input
+        type="number"
+        id="page_count"
+        name="page_count"
+        min="1"
+        value="<%= book ? book.page_count : '' %>"
+        required
+      />
+
+      <label for="summary">Summary</label>
+      <textarea id="summary" name="summary" rows="4"><%= book ? book.summary : '' %></textarea>
+
+      <label for="date_published">Date Published</label>
+      <input
+        type="date"
+        id="date_published"
+        name="date_published"
+        value="<%= book ? book.date_published : '' %>"
+      />
+
+      <label for="book_cover">Book Cover URL</label>
+      <input
+        type="url"
+        id="book_cover"
+        name="book_cover"
+        value="<%= book ? book.book_cover : '/img/placeholder.jpg' %>"
+      />
+
+      <label for="average_rating">Average Rating</label>
+      <input
+        type="number"
+        id="average_rating"
+        name="average_rating"
+        min="0"
+        max="10"
+        step="0.1"
+        value="<%= book ? book.average_rating : 0 %>"
+        readonly
+      />
+
+      <button type="submit" class="btn btn-primary">
+        <%= book ? 'Save Changes' : 'Add Book' %>
+      </button>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

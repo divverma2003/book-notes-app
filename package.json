@@ -1,0 +1,31 @@
+{
+  "name": "book-notes-app",
+  "version": "1.0.0",
+  "description": "Read Me",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divverma2003/book-notes-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/divverma2003/book-notes-app/issues"
+  },
+  "homepage": "https://github.com/divverma2003/book-notes-app#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "body-parser": "^1.20.2",
+    "pg": "^8.11.3",
+    "bcrypt": "^5.1.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "express-session": "^1.17.3",
+    "dotenv": "^16.4.5"
+  }
+}

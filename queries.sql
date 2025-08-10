@@ -26,7 +26,8 @@ CREATE TABLE books (
     page_count INTEGER CHECK (page_count >= 1),
     summary TEXT,
     date_published DATE,
-    book_cover TEXT DEFAULT '/img/placeholder.jpg' -- fallback cover URL
+    book_cover TEXT DEFAULT '/img/placeholder.jpg', -- fallback cover URL
+    average_rating NUMERIC(3, 2) DEFAULT 0,
 );
 
 CREATE TABLE reviews (
@@ -38,6 +39,44 @@ CREATE TABLE reviews (
     book_id INTEGER NOT NULL REFERENCES books(book_id) ON DELETE CASCADE,
     CONSTRAINT unique_user_book_review UNIQUE (user_id, book_id) -- prevent duplicate reviews
 );
+
+
+CREATE OR REPLACE FUNCTION update_average_rating()
+RETURNS TRIGGER AS $$
+DECLARE
+    target_book_id INTEGER;
+BEGIN
+    -- Figure out which book_id to update
+    IF (TG_OP = 'DELETE') THEN
+        target_book_id := OLD.book_id;
+    ELSE
+        target_book_id := NEW.book_id;
+    END IF;
+
+    -- Update the average rating
+    UPDATE books
+    SET average_rating = COALESCE((
+        SELECT ROUND(AVG(rating)::numeric, 2)
+        FROM reviews
+        WHERE book_id = target_book_id
+    ), 0)
+    WHERE book_id = target_book_id;
+
+    -- Return appropriate row
+    IF (TG_OP = 'DELETE') THEN
+        RETURN OLD;
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Trigger to update average rating after insert, update, or delete on reviews
+CREATE TRIGGER trg_update_avg_after_insert
+AFTER INSERT OR UPDATE OF rating OR DELETE ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_average_rating();
 
 INSERT INTO books (isbn13, title, author, genre, page_count, summary, date_published, book_cover) VALUES
 ('9780134190440', 'Effective Java', 'Joshua Bloch', 'Programming', 416, 'Best practices for Java programming.', '2018-01-11', 'https://covers.openlibrary.org/b/isbn/9780134190440.jpg'),
@@ -55,3 +94,8 @@ INSERT INTO books (isbn13, title, author, genre, page_count, summary, date_publi
 INSERT INTO users (email, password, name, about, phone_number, favorite_book_id, user_color) VALUES
 ('testuser1@example.com', 'password', 'Test User 1', 'About Test User 1', '+1234567890', 1, 'blue'),
 ('testuser2@example.com', 'password', 'Test User 2', 'About Test User 2', '+0987654321', 2, 'green');
+
+-- Create 2 reviews for testing (all fields)
+INSERT INTO reviews (rating, short_description, long_description, user_id, book_id) VALUES
+(8, 'Great book on Java!', 'Effective Java provides best practices for Java programming.', 1, 1),
+(9, 'A must-read for software architects.', 'Designing Data-Intensive Applications is essential for understanding modern software architecture.', 1, 2);

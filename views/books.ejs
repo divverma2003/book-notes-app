@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Books - Book Notes App</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <% if (locals.user) { %>
+    <%- include('partials/authHeader', { user: user }) %>
+  <% } else { %>
+    <%- include('partials/header') %>
+  <% } %>
+
+  <main class="books-container">
+    <h1>Books</h1>
+
+    <% if (books.length === 0) { %>
+      <p>No books found.</p>
+    <% } else { %>
+      <ul class="books-list">
+        <% books.forEach(book => { %>
+          <li class="book-item">
+            <img src="<%= book.book_cover || '/img/placeholder.jpg' %>" alt="Cover of <%= book.title %>" class="book-cover" />
+
+            <div class="book-info">
+              <h2><%= book.title %></h2>
+              <p><strong>ISBN:</strong> <%= book.isbn13 %></p>
+              <p><strong>Author:</strong> <%= book.author %></p>
+              <p><strong>Genre:</strong> <%= book.genre || 'N/A' %></p>
+              <p><strong>Pages:</strong> <%= book.page_count %></p>
+              <p><strong>Published:</strong> <%= book.date_published ? book.date_published.toISOString().slice(0,10) : 'Unknown' %></p>
+              <p><strong>Average Rating:</strong> <%= book.average_rating.toFixed(1) %> / 10</p>
+              <p class="book-summary"><%= book.summary || 'No summary available.' %></p>
+            </div>
+
+            <% if (user) { %>
+              <div class="book-actions">
+                <a href="/auth/<%= book.book_id %>/edit-book" class="btn btn-edit" title="Edit Book">✏️ Edit</a>
+                <a href="/auth/<%= user.user_id %>/add-review?book_id=<%= book.book_id %>" class="btn btn-review" title="Add Review for <%= book.title %>">📝 Add Review</a>
+              </div>
+            <% } %>
+          </li>
+        <% }) %>
+      </ul>
+
+      <!-- Pagination controls could go here if implemented -->
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

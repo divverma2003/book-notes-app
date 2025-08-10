@@ -1,28 +1,108 @@
-Techstack:
-1. Express + sessions
-2. Nodejs
-3. PostgresSQL
+Tech Stack:
+1. Express + Sessions
+2. Node.js
+3. PostgreSQL
 4. Passport
 5. Bcrypt
 
------------------------------------------------------------------------------------------
-
-* API For Book Cover:
+APIs
+* Book Cover API:
     The URL pattern to access book covers is:
 
     https://covers.openlibrary.org/b/$key/$value-$size.jpg
 
     Where:
-    1. key can be any one of ISBN, OCLC, LCCN, OLID and ID (case-insensitive)
+    1. key can be one of ISBN, OCLC, LCCN, OLID, or ID (case-insensitive)
     2. value is the value of the chosen key
-    3. size can be one of S, M and L for small, medium and large respectively.
+    3. size can be S, M, or L for small, medium, and large, respectively.
 
 Website Structure
+Note: All pages include the header.ejs, footer.ejs, and search partials unless otherwise specified.
+
+* Partials:
+    1. Generic Header [header.ejs]: Navbar with links to "Home", "View Books", and "View Users".
+        * Routes:
+            1. Home: Landing Page [index.ejs] --> GET: /
+            2. View Books: Books Inventory [books.ejs] --> GET: /books
+            3. View Users: Users List [users.ejs] --> GET: /users
+    2. Auth Header [authHeader.ejs]: Navbar with links to "Home", "View Books", "View Users", "Write a Review", "Add a Book", and a Logout button.
+        * Routes:
+            1. Home: User Dashboard [index.ejs] --> GET: /auth/user/[user_id]
+            2. View Books: Books Inventory [books.ejs] --> GET: /books
+            3. View Users: Users List [users.ejs] --> GET: /users
+            4. Write a Review: Review Form [reviewForm.ejs] --> GET: /auth/[user_id]/add-review
+            5. Add a Book: Book Form [bookForm.ejs] --> GET: /auth/add-book
+            6. Logout: [index.ejs] --> GET: /
+    3. Footer [footer.ejs]: Simple footer with copyright information.
+    4. Search [search.ejs]: Search tool with toggle for two options:
+        * Routes (on search):
+            1. Search Users: [users.ejs] --> POST: /users
+            2. Search Books: [books.ejs] --> POST: /books
+    5. User Banner [userBanner.ejs]: Right-aligned user banner showing:
+        * user_id, email, name, about, phone, and favorite_book_id
+        * Edit icon (clickable): [userForm.ejs] --> GET: /auth/user/edit/[user_id]
+
+* General Pages:
+    1. Landing Page [index.ejs] (/) --> Simple site with website name and two buttons:
+        * Routes:
+            1. Login: [login.ejs] --> GET: /login
+            2. Sign Up: [register.ejs] --> GET: /register
+    2. Login Page [login.ejs] (/login) --> Form with email, password, and submit button.
+        * Routes:
+            1. Login: POST /login
+                a. SUCCESS: --> GET: /auth/user/[user_id] (userDashboard.ejs)
+                b. FAIL: REDIRECT: /login with error message
+    3. Sign Up Page [register.ejs] (/register) --> Form with fields for name, email, password, optional phone number, about, favorite book (dropdown + search), and a choice of 9 color palettes for dashboard theme.
+        * Routes:
+            1. Sign Up: POST /register
+                a. SUCCESS: --> GET: /auth/user/[user_id] (userDashboard.ejs)
+                b. FAIL: REDIRECT: /register with error message
+    4. Users Page [users.ejs] (/users) --> Paginated list of users. Each user header shows name, username, favorite book, and review count.
+        * Routes:
+            1. Clickable user header: User Page [user.ejs] --> GET: /user/[user_id]
+    5. User Page [user.ejs] (/user/[user_id]) --> User profile info and paginated list of their book reviews (title, rating, cover, short description).
+        * Routes:
+            1. Clickable review header: Review Page [review.ejs] --> GET: /user/[review_id]
+    6. Books Page [books.ejs] (/books) --> Paginated list of books with info (ISBN, title, author, genre, page count, summary, date published, cover, average rating).
+        * Routes (auth view only):
+            1. Edit icon beside book: Book Form [bookForm.ejs] --> GET: /auth/[book_id]/edit-book
+            2. Add Review button beside book: Review Form [reviewForm.ejs] (book pre-filled) --> GET: /auth/[user_id]/add-review
+
+* Auth Pages [Auth Header]:
+    1. User Dashboard [userDashboard.ejs] (/auth/user/[user_id]) --> Similar to "user.ejs", shows user's book reviews.
+        * Routes:
+            1. Clickable review header: Review Page [review.ejs] --> GET: /user/[review_id]
+            2. Edit icon beside review: Review Form [reviewForm.ejs] --> GET: /auth/[user_id]/edit-review
+            3. Delete icon beside review: Deletes review, redirects to dashboard --> POST: /auth/user/[user_id]
+            4. Add Review button beside book: Review Form [reviewForm.ejs] (book pre-filled) --> GET: /auth/[user_id]/add-review
+        * Partials:
+            1. User Banner [userBanner.ejs]: Right-aligned user banner
+    2. Review Form [reviewForm.ejs] (/auth/[user_id]/edit-review and /auth/[user_id]/add-review):
+        * Routes:
+            1. Submit: POST: /auth/add-book or /auth/edit-book
+                a. SUCCESS: --> GET: /auth/user/[user_id] (userDashboard.ejs) with success message
+                b. FAIL: REDIRECT: /auth/add-book or /auth/edit-book with error message
+    3. User Form [userForm.ejs] (/auth/user/edit/[user_id]):
+        * Routes:
+            1. Submit: POST: /auth/user/edit/[user_id]
+                a. SUCCESS: --> GET: /auth/user/[user_id] (userDashboard.ejs) with success message
+                b. FAIL: REDIRECT: /auth/user/edit/[user_id] with error message
+    4. Book Form [bookForm.ejs] (/auth/add-book and /auth/edit-book): Form for ISBN, title, author, genre, page count, summary, date published, cover, average rating, and submit button.
+        * Routes:
+            1. Submit: POST: /auth/add-book or /auth/edit-book
+                a. SUCCESS: --> GET: /books (books.ejs) with success message
+                b. FAIL: REDIRECT: /auth/add-book or /auth/edit-book with error message
+
 -----------------------------------------------------------------------------------------
-1. Landing Page (/) --> Has a simple log in screen (/login) /sign up screen (/register) + a button to navigate to user list (/user)
-2. (/login) --> Form with a email + password field (POST) + upon login, takes user to /auth/user/[id]
-2. (/register) --> Form with a name, email + password field + phone number, an optional profile picture field + an optional favorite genre drop-down field (POST)
-3. /(user) --> Grid page with a list of users, upon clicking will take us to /user/[id]
-4. /user/[id] --> Page with user's book reviews, here the user's profile info will be visible + a list with a short description of their book reviews will be available + search bar + button that takes them to each corresponding review (/user/[id]/[isbn])
-5. /user/[id]/[isbn] --> user's full fledged book review
-6. /auth/user/[id]
+Website Flow Improvements & Suggestions:
+-----------------------------------------------------------------------------------------
+1. Consistent Route Naming: Use `/books` and `/users` (not `/books.ejs` or `/users.ejs`) for clarity and RESTful convention.
+2. Authentication Flow: After login or signup, always redirect to the user dashboard for a personalized experience.
+3. Navigation: Ensure the navbar updates based on authentication state (show/hide "Write a Review", "Add a Book", and "Logout" for logged-in users).
+4. Error Handling: Display clear error messages on failed login, signup, or form submissions, and keep the user on the same page with their input preserved.
+5. Pagination: Clearly indicate current page and total pages for both users and books lists.
+6. Review/Book Actions: Use modal dialogs for editing/deleting reviews or books to avoid unnecessary page reloads.
+7. User Profile: Allow users to update their profile and theme easily from the dashboard.
+8. Book Cover Fallback: If a book cover is missing, display a placeholder image.
+9. Accessibility: Ensure all forms and navigation are accessible (labels, keyboard navigation, ARIA attributes).
+10. Mobile Responsiveness: Make sure all pages and forms are mobile-friendly.

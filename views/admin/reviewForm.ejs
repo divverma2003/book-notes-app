@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= review ? 'Edit Review' : 'Add Review' %> - Book Notes App</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <%- include('partials/authHeader', { user: user }) %>
+
+  <main class="form-container">
+    <h2 class="form-title"><%= review ? 'Edit Review' : 'Add Review' %></h2>
+
+    <% if (error) { %>
+      <p class="form-error"><%= error %></p>
+    <% } %>
+
+    <form
+      action="<%= review ? '/auth/edit-review' : '/auth/add-review' %>"
+      method="POST"
+      class="form"
+    >
+      <% if (review) { %>
+        <input type="hidden" name="review_id" value="<%= review.review_id %>" />
+      <% } %>
+
+      <input type="hidden" name="user_id" value="<%= user.user_id %>" />
+
+      <label for="book">Book</label>
+      <% if (review) { %>
+        <!-- Show book title readonly when editing -->
+        <input
+          type="text"
+          id="book"
+          value="<%= review.book_title %>"
+          readonly
+          class="readonly-input"
+        />
+        <input type="hidden" name="book_id" value="<%= review.book_id %>" />
+      <% } else { %>
+        <!-- On add, let user select book -->
+        <select id="book_id" name="book_id" required>
+          <option value="" disabled selected>Select a book</option>
+          <% books.forEach(book => { %>
+            <option
+              value="<%= book.book_id %>"
+              <%= (book.book_id == preselectedBookId) ? 'selected' : '' %>
+            ><%= book.title %></option>
+          <% }) %>
+        </select>
+      <% } %>
+
+      <label for="rating">Rating (1-10)</label>
+      <input
+        type="number"
+        id="rating"
+        name="rating"
+        min="1"
+        max="10"
+        required
+        value="<%= review ? review.rating : '' %>"
+      />
+
+      <label for="short_description">Short Description</label>
+      <input
+        type="text"
+        id="short_description"
+        name="short_description"
+        maxlength="255"
+        required
+        value="<%= review ? review.short_description : '' %>"
+      />
+
+      <label for="long_description">Long Description (optional)</label>
+      <textarea
+        id="long_description"
+        name="long_description"
+        rows="5"
+        placeholder="Write a detailed review..."
+      ><%= review ? review.long_description : '' %></textarea>
+
+      <button type="submit" class="btn btn-primary">
+        <%= review ? 'Save Changes' : 'Add Review' %>
+      </button>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

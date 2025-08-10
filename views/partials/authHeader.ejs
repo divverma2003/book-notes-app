@@ -1,0 +1,19 @@
+<header class="site-header auth-header">
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <a href="/auth/user/<%= user.user_id %>" class="navbar-brand">Book Notes App</a>
+    </div>
+    <ul class="navbar-links">
+      <li><a href="/auth/user/<%= user.user_id %>">Home</a></li>
+      <li><a href="/books">View Books</a></li>
+      <li><a href="/users">View Users</a></li>
+      <li><a href="/auth/<%= user.user_id %>/add-review">Write a Review</a></li>
+      <li><a href="/auth/add-book">Add a Book</a></li>
+      <li>
+        <form action="/logout" method="GET" class="logout-form">
+          <button type="submit" class="btn-logout">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+</header>

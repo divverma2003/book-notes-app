@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= userProfile.name %> - Profile - Book Notes App</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <% if (locals.currentUser) { %>
+    <%- include('partials/authHeader', { user: currentUser }) %>
+  <% } else { %>
+    <%- include('partials/header') %>
+  <% } %>
+
+  <main class="user-profile-container">
+    <section class="user-info">
+      <h1><%= userProfile.name %> (<%= userProfile.username || 'N/A' %>)</h1>
+      <p><strong>Email:</strong> <%= userProfile.email %></p>
+      <p><strong>About:</strong> <%= userProfile.about || 'No information provided.' %></p>
+      <p><strong>Phone:</strong> <%= userProfile.phone || 'Not provided' %></p>
+      <p><strong>Favorite Book:</strong> <%= userProfile.favorite_book_title || 'None' %></p>
+    </section>
+
+    <section class="user-reviews">
+      <h2>Reviews by <%= userProfile.name %></h2>
+
+      <% if (reviews.length === 0) { %>
+        <p>No reviews yet.</p>
+      <% } else { %>
+        <ul class="reviews-list">
+          <% reviews.forEach(review => { %>
+            <li class="review-item">
+              <a href="/user/<%= review.review_id %>" class="review-header">
+                <h3><%= review.book_title %> - Rating: <%= review.rating %>/10</h3>
+              </a>
+              <img src="<%= review.book_cover || '/img/placeholder.jpg' %>" alt="Cover of <%= review.book_title %>" class="review-book-cover" />
+              <p><%= review.short_description %></p>
+            </li>
+          <% }) %>
+        </ul>
+
+        <!-- Pagination controls for reviews -->
+      <% } %>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
