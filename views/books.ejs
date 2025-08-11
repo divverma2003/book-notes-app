@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Books - Book Notes App</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
-<body>
-  <% if (locals.user) { %>
-    <%- include('partials/authHeader', { user: user }) %>
-  <% } else { %>
-    <%- include('partials/header') %>
-  <% } %>
-
-  <main class="books-container">
+<main class="books-container">
     <h1>Books</h1>
-
     <% if (books.length === 0) { %>
       <p>No books found.</p>
     <% } else { %>
@@ -23,7 +7,6 @@
         <% books.forEach(book => { %>
           <li class="book-item">
             <img src="<%= book.book_cover || '/img/placeholder.jpg' %>" alt="Cover of <%= book.title %>" class="book-cover" />
-
             <div class="book-info">
               <h2><%= book.title %></h2>
               <p><strong>ISBN:</strong> <%= book.isbn13 %></p>
@@ -48,7 +31,3 @@
       <!-- Pagination controls could go here if implemented -->
     <% } %>
   </main>
-
-  <%- include('partials/footer') %>
-</body>
-</html>

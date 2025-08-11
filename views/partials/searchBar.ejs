@@ -1,0 +1,14 @@
+<form method="POST" action="/search" class="search-form">
+  <div class="search-toggle">
+    <label>
+      <input type="radio" name="searchType" value="books" checked>
+      Books
+    </label>
+    <label>
+      <input type="radio" name="searchType" value="users">
+      Users
+    </label>
+  </div>
+  <input type="text" name="query" placeholder="Search..." required>
+  <button type="submit">Search</button>
+</form>

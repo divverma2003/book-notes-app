@@ -1,65 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><%= user.name %>’s Dashboard - Book Notes App</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
-<body>
-  <%- include('partials/authHeader', { user: user }) %>
+<main class="dashboard-container">
+  <section class="reviews-section">
+    <h2><%= user.name %>’s Book Reviews</h2>
 
-  <main class="dashboard-container">
-    <section class="reviews-section">
-      <h2><%= user.name %>’s Book Reviews</h2>
-
-      <% if (reviews.length === 0) { %>
-        <p>You have not written any reviews yet.</p>
-      <% } else { %>
-        <ul class="reviews-list">
-          <% reviews.forEach(review => { %>
-            <li class="review-item">
-              <a href="/user/<%= review.review_id %>" class="review-title">
+    <% if (reviews.length === 0) { %>
+      <p>You have not written any reviews yet.</p>
+    <% } else { %>
+      <ul class="reviews-list">
+        <% reviews.forEach(review => { %>
+          <li class="review-item">
+            <a href="/user/<%= review.review_id %>" class="review-title">
                 <strong><%= review.book_title %></strong> — Rating: <%= review.rating %>/10
-              </a>
+            </a>
 
-              <div class="review-actions">
-                <a href="/auth/<%= user.user_id %>/edit-review?review_id=<%= review.review_id %>" class="edit-icon" title="Edit Review" aria-label="Edit Review">✏️</a>
+            <div class="review-actions">
+              <a href="/auth/<%= user.user_id %>/edit-review?review_id=<%= review.review_id %>" class="edit-icon" title="Edit Review" aria-label="Edit Review">✏️</a>
 
-                <form
-                  action="/auth/user/<%= user.user_id %>/delete-review"
-                  method="POST"
-                  class="delete-form"
-                  onsubmit="return confirm('Are you sure you want to delete this review?');"
-                >
-                  <input type="hidden" name="review_id" value="<%= review.review_id %>" />
-                  <button type="submit" class="delete-button" title="Delete Review" aria-label="Delete Review">🗑️</button>
-                </form>
-              </div>
-            </li>
+              <form
+                action="/auth/user/<%= user.user_id %>/delete-review"
+                method="POST"
+                class="delete-form"
+                onsubmit="return confirm('Are you sure you want to delete this review?');"
+              >
+                <input type="hidden" name="review_id" value="<%= review.review_id %>" />
+                <button type="submit" class="delete-button" title="Delete Review" aria-label="Delete Review">🗑️</button>
+              </form>
+            </div>
+          </li>
           <% }) %>
-        </ul>
+      </ul>
       <% } %>
-    </section>
+  </section>
 
-<section class="add-review-section">
-  <h3>Add a Review</h3>
-  <div class="add-review-buttons">
-    <% books.forEach(book => { %>
-      <a 
-        href="/auth/<%= user.user_id %>/add-review?book_id=<%= book.book_id %>" 
-        class="btn btn-secondary"
-        title="Add review for <%= book.title %>"
-      >
-        Review: <%= book.title %>
-      </a>
-    <% }) %>
-  </div>
-</section>
+  <section class="add-review-section">
+    <h3>Add a Review</h3>
+    <div class="add-review-buttons">
+      <% books.forEach(book => { %>
+        <a 
+          href="/auth/<%= user.user_id %>/add-review?book_id=<%= book.book_id %>" 
+          class="btn btn-secondary"
+          title="Add review for <%= book.title %>"
+        >
+          Review: <%= book.title %>
+        </a>
+      <% }) %>
+    </div>
 
-  </main>
-
-  <%- include('partials/userBanner', { user: user }) %>
-  <%- include('partials/footer') %>
-</body>
-</html>
+    <%- include('partials/userBanner', { user: user }) %> 
+  </section>
+</main>

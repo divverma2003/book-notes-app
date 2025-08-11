@@ -1,69 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Notes App</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <%- include("partials/header") %>
+<main class="form-container">
+    <h2 class="form-title">Sign Up</h2>
 
-    <!-- Page content here -->
+    <% if (typeof error !== 'undefined') { %>
+        <p class="form-error"><%= error %></p>
+    <% } %>
 
-    <main class="form-container">
-        <h2 class="form-title">Sign Up</h2>
+    <form action="/register" method="POST" class="form">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required placeholder="Your full name">
 
-        <% if (typeof error !== 'undefined') { %>
-            <p class="form-error"><%= error %></p>
-        <% } %>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required placeholder="you@example.com">
 
-        <form action="/register" method="POST" class="form">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required placeholder="Your full name">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required placeholder="Create a password">
 
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required placeholder="you@example.com">
+        <label for="phone">Phone (optional)</label>
+        <input type="tel" name="phone" id="phone" placeholder="(555) 123-4567">
 
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required placeholder="Create a password">
+        <label for="about">About You</label>
+        <textarea name="about" id="about" rows="3" placeholder="Tell us something about yourself"></textarea>
 
-            <label for="phone">Phone (optional)</label>
-            <input type="tel" name="phone" id="phone" placeholder="(555) 123-4567">
+        <label for="favorite_book">Favorite Book</label>
+        <select name="favorite_book" id="favorite_book" required>
+        <option value="" disabled selected>Select a book</option>
+        <% books.forEach(book => { %>
+            <option value="<%= book.book_id %>"><%= book.title %></option>
+        <% }) %>
+        </select>
 
-            <label for="about">About You</label>
-            <textarea name="about" id="about" rows="3" placeholder="Tell us something about yourself"></textarea>
+        <label for="theme_color">Dashboard Theme</label>
+        <select name="theme_color" id="theme_color" required>
+        <option value="" disabled selected>Select a color palette</option>
+        <option value="pastel-blue">Pastel Blue</option>
+        <option value="pastel-green">Pastel Green</option>
+        <option value="pastel-yellow">Pastel Yellow</option>
+        <option value="pastel-pink">Pastel Pink</option>
+        <option value="pastel-purple">Pastel Purple</option>
+        <option value="pastel-orange">Pastel Orange</option>
+        <option value="pastel-red">Pastel Red</option>
+        <option value="pastel-gray">Pastel Gray</option>
+        <option value="pastel-brown">Pastel Brown</option>
+        </select>
 
-            <label for="favorite_book">Favorite Book</label>
-            <select name="favorite_book" id="favorite_book" required>
-            <option value="" disabled selected>Select a book</option>
-            <% books.forEach(book => { %>
-                <option value="<%= book.book_id %>"><%= book.title %></option>
-            <% }) %>
-            </select>
-
-            <label for="theme_color">Dashboard Theme</label>
-            <select name="theme_color" id="theme_color" required>
-            <option value="" disabled selected>Select a color palette</option>
-            <option value="pastel-blue">Pastel Blue</option>
-            <option value="pastel-green">Pastel Green</option>
-            <option value="pastel-yellow">Pastel Yellow</option>
-            <option value="pastel-pink">Pastel Pink</option>
-            <option value="pastel-purple">Pastel Purple</option>
-            <option value="pastel-orange">Pastel Orange</option>
-            <option value="pastel-red">Pastel Red</option>
-            <option value="pastel-gray">Pastel Gray</option>
-            <option value="pastel-brown">Pastel Brown</option>
-            </select>
-
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </form>
-
-        <p class="form-footer-text">
-            Already have an account? <a href="/login">Login here</a>
-        </p>
-    </main>
-
-    <%- include("partials/footer") %>
-</body>
-</html>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+    <p class="form-footer-text">
+        Already have an account? <a href="/login">Login here</a>
+    </p>
+</main>

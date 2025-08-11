@@ -34,10 +34,10 @@ Note: All pages include the header.ejs, footer.ejs, and search partials unless o
             5. Add a Book: Book Form [bookForm.ejs] --> GET: /auth/add-book
             6. Logout: [index.ejs] --> GET: /
     3. Footer [footer.ejs]: Simple footer with copyright information.
-    4. Search [search.ejs]: Search tool with toggle for two options:
+    4. Search [searchBar.ejs]: Search tool with toggle for two options:
         * Routes (on search):
-            1. Search Users: [users.ejs] --> POST: /users
-            2. Search Books: [books.ejs] --> POST: /books
+            1. Search Users: [search.ejs] --> POST: /search with inputType: users
+            2. Search Books: [search.ejs] --> POST: /search with inputType: books
     5. User Banner [userBanner.ejs]: Right-aligned user banner showing:
         * user_id, email, name, about, phone, and favorite_book_id
         * Edit icon (clickable): [userForm.ejs] --> GET: /auth/user/edit/[user_id]
@@ -67,6 +67,7 @@ Note: All pages include the header.ejs, footer.ejs, and search partials unless o
         * Routes (auth view only):
             1. Edit icon beside book: Book Form [bookForm.ejs] --> GET: /auth/[book_id]/edit-book
             2. Add Review button beside book: Review Form [reviewForm.ejs] (book pre-filled) --> GET: /auth/[user_id]/add-review
+    7. Search Page [search.ejs] (/search)
 
 * Auth Pages [Auth Header]:
     1. User Dashboard [userDashboard.ejs] (/auth/user/[user_id]) --> Similar to "user.ejs", shows user's book reviews.

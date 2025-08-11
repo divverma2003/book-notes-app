@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Users - Book Notes App</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
-<body>
-  <% if (locals.user) { %>
-    <%- include('partials/authHeader', { user: user }) %>
+<main class="users-container">
+  <h1>Users</h1>
+
+  <% if (users.length === 0) { %>
+    <p>No users found.</p>
   <% } else { %>
-    <%- include('partials/header') %>
+    <ul class="users-list">
+      <% users.forEach(u => { %>
+        <li class="user-item">
+          <a href="/user/<%= u.user_id %>" class="user-header">
+            <h2><%= u.name %> (<%= u.username || 'N/A' %>)</h2>
+          </a>
+          <p><strong>Favorite Book:</strong> <%= u.favorite_book_title || 'None' %></p>
+          <p><strong>Review Count:</strong> <%= u.review_count %></p>
+        </li>
+      <% }) %>
+    </ul>
+    <!-- Pagination controls here -->
   <% } %>
-
-  <main class="users-container">
-    <h1>Users</h1>
-
-    <% if (users.length === 0) { %>
-      <p>No users found.</p>
-    <% } else { %>
-      <ul class="users-list">
-        <% users.forEach(u => { %>
-          <li class="user-item">
-            <a href="/user/<%= u.user_id %>" class="user-header">
-              <h2><%= u.name %> (<%= u.username || 'N/A' %>)</h2>
-            </a>
-            <p><strong>Favorite Book:</strong> <%= u.favorite_book_title || 'None' %></p>
-            <p><strong>Review Count:</strong> <%= u.review_count %></p>
-          </li>
-        <% }) %>
-      </ul>
-
-      <!-- Pagination controls here -->
-    <% } %>
-  </main>
-
-  <%- include('partials/footer') %>
-</body>
-</html>
+</main>

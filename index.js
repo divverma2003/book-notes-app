@@ -1,16 +1,24 @@
 import express from "express";
+import expressEjsLayouts from "express-ejs-layouts";
+
 import bodyParser from "body-parser";
-import pg from "pg";
 import bcrypt from "bcrypt";
+import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import session from "express-session";
-import env from "dotenv";
+
+import './server/config/db.js';
+import db from "./server/config/db.js";
+
+import publicRoutes from "./server/routes/public.js";
+import userRoutes from "./server/routes/user.js";
+import authRoutes from "./server/routes/auth.js";
+import bookRoutes from "./server/routes/book.js";
+import reviewRoutes from "./server/routes/review.js";
 
 const app = express();
 const port = 3000;
 const saltRounds = 10;
-env.config();
 
 app.use(
   session({
@@ -19,21 +27,24 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
 
+// Routing Middleware
+app.use('/', publicRoutes);
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+app.use('/books', bookRoutes);
+app.use('/reviews', reviewRoutes);
+
+// Use Layouts
+app.use(expressEjsLayouts);
+app.use(express.static('public'));
+app.set('layout', './layouts/main');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Session and Authentication Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-const db = new pg.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
-});
-
-db.connect();
 
 
 passport.serializeUser((user, cb) => {
