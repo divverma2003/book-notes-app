@@ -35,7 +35,7 @@
       placeholder="New password"
     />
 
-    <label for="phone">Phone (optional)</label>
+    <label for="phone_number">Phone (optional)</label>
     <input
       type="tel"
       name="phone"
@@ -52,8 +52,8 @@
       placeholder="Tell us something about yourself"
     ><%= user.about || '' %></textarea>
 
-    <label for="favorite_book">Favorite Book</label>
-    <select name="favorite_book" id="favorite_book" required>
+    <label for="favorite_book_id">Favorite Book</label>
+    <select name="favorite_book_id" id="favorite_book_id" required>
       <option value="" disabled>Select a book</option>
       <% books.forEach(book => { %>
         <option
@@ -63,8 +63,8 @@
       <% }) %>
     </select>
 
-    <label for="theme_color">Dashboard Theme</label>
-    <select name="theme_color" id="theme_color" required>
+    <label for="user_color">Dashboard Theme</label>
+    <select name="user_color" id="user_color" required>
       <% const themes = [
         'pastel-blue',
         'pastel-green',
@@ -81,7 +81,7 @@
         <% themes.forEach(theme => { %>
         <option
           value="<%= theme %>"
-          <%= user.theme_color === theme ? 'selected' : '' %>
+          <%= user.user_color === theme ? 'selected' : '' %>
         ><%= theme.replace('pastel-', '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) %></option>
         <% }) %>
       </select>

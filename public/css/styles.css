@@ -1,100 +1,196 @@
-
+/* ===========================
+   Global Reset & Variables
+   =========================== */
 :root {
-    --pastel-blue: #a2c2e0;
-    --pastel-green: #b7e4c7;
-    --pastel-yellow: #fce38a;
-    --pastel-pink: #f9c5d1;
-    --pastel-purple: #d6cadd;
-    --pastel-orange: #ffb347;
-    --pastel-red: #ff9c9c;
-    --pastel-gray: #d3d3d3;
-    --pastel-brown: #d8b4a2;
+  --pastel-blue: #a2c2e0;
+  --pastel-green: #b7e4c7;
+  --pastel-yellow: #fce38a;
+  --pastel-pink: #f9c5d1;
+  --pastel-purple: #d6cadd;
+  --pastel-orange: #ffb347;
+  --pastel-red: #ff9c9c;
+  --pastel-gray: #d3d3d3;
+  --pastel-brown: #d8b4a2;
 }
 
-/* Navbar styling */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body,
+input,
+button,
+select,
+textarea {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Style for read-only inputs */
+input:read-only,
+textarea:read-only {
+  background-color: #f5f5f5; /* Light grey background */
+  color: #888; /* Slightly greyed-out text */
+  border: 1px dashed #ccc; /* Dashed border to signify non-editable */
+  cursor: not-allowed; /* Change cursor to indicate it's not editable */
+}
+
+/* Add hover effect for clarity */
+input:read-only:hover,
+textarea:read-only:hover {
+  border-color: var(--pastel-gray);
+}
+
+/* ===========================
+   Layout: Navbar
+   =========================== */
 .site-header {
-    background-color: var(--pastel-blue);
-    padding: 0.75rem 1rem;
-    border-bottom: 2px solid #ddd;
+  background-color: var(--pastel-blue);
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #ddd;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* BRANDING */
 .navbar-logo .navbar-brand {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
+  font-size: 1.8rem; /* Increase font size */
+  font-weight: bold; /* Make it bold */
+  color: #222;
+  text-decoration: none; /* Remove underline */
+  text-transform: uppercase; /* Make text uppercase */
+  letter-spacing: 2px; /* Add spacing between letters */
+  position: relative; /* For additional effects */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
+}
+
+/* Add a subtle text shadow for depth */
+.navbar-logo .navbar-brand {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect: Change color and slightly scale up */
+.navbar-logo .navbar-brand:hover {
+  color: var(--pastel-brown); /* Change to another pastel color */
+  transform: scale(1.1); /* Slightly enlarge */
+}
+
+/* Optional: Add a decorative underline effect */
+.navbar-logo .navbar-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Position below the text */
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--pastel-brown), #4e7f65);
+  transform: scaleX(0); /* Start hidden */
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+/* Reveal underline on hover */
+.navbar-logo .navbar-brand:hover::after {
+  transform: scaleX(1); /* Expand underline */
 }
 
 .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  gap: 1rem;
 }
 
 .navbar-links li a {
-    text-decoration: none;
-    color: #333;
-    padding: 0.5rem 0.75rem;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
+  text-decoration: none;
+  color: #222;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
 }
 
 .navbar-links li a:hover {
-    background-color: var(--pastel-green);
+  background-color: var(--pastel-yellow);
 }
 
-/* Optional: responsive collapse for small screens */
+.navbar-links li form.logout-form {
+  margin: 0;
+}
+
+/* Auth Header */
+.auth-header {
+  background-color: var(--pastel-green);
+}
+
+/* Logout Button */
+.btn-logout {
+  background-color: transparent;
+  border: 2px solid #333;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  transition: background-color 0.25s ease;
+}
+
+.btn-logout:hover {
+  background-color: #9ad8a3;
+  border-color: #9ad8a3;
+  color: #222;
+}
+
+/* Responsive Navbar */
 @media (max-width: 600px) {
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .navbar-links {
-        flex-direction: column;
-        width: 100%;
-    }
-    .navbar-links li {
-        width: 100%;
-    }
-    .navbar-links li a {
-        display: block;
-        width: 100%;
-    }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar-links li {
+    width: 100%;
+  }
+  .navbar-links li a {
+    display: block;
+    width: 100%;
+  }
 }
 
-
-/* FOOTER STYLING */
+/* ===========================
+   Layout: Footer
+   =========================== */
 .site-footer {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    text-align: center;
-    margin-top: 2rem;
-    border-top: 1px solid #ddd;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid #ddd;
 }
 
 .footer-text {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #555;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .footer-subtext {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #777;
+  margin: 0;
+  font-size: 0.8rem;
+  color: #777;
 }
 
-/* Landing page styling */
+/* ===========================
+   Landing Page
+   =========================== */
 .landing-container {
   max-width: 400px;
   margin: 8rem auto;
@@ -114,6 +210,9 @@
   gap: 1.5rem;
 }
 
+/* ===========================
+   Buttons
+   =========================== */
 .btn {
   padding: 0.75rem 1.75rem;
   border-radius: 8px;
@@ -148,15 +247,23 @@
   color: #fff;
 }
 
-/* Register/Login form styling */
+.btn-center {
+  display: block;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+/* ===========================
+   Forms
+   =========================== */
 .form-container {
-  max-width: 400px;
-  margin: 4rem auto;
-  padding: 1rem 2rem;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: left;
+  max-width: 800px;    /* Makes the form container larger */
+  width: 90%;          /* Responsive width */
+  margin: 2rem auto;   /* Center it vertically with some spacing */
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .form-title {
@@ -189,10 +296,7 @@
   transition: border-color 0.2s ease;
 }
 
-.form input[type="text"]:focus,
-.form input[type="email"]:focus,
-.form input[type="password"]:focus,
-.form input[type="tel"]:focus,
+.form input:focus,
 .form textarea:focus,
 .form select:focus {
   border-color: var(--pastel-blue);
@@ -205,6 +309,13 @@
 
 .form-error {
   color: #b22222;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.form-success {
+  color: #4caf50;
   text-align: center;
   margin-bottom: 1rem;
   font-weight: 600;
@@ -226,7 +337,9 @@
   text-decoration: underline;
 }
 
-/* Search Form */
+/* ===========================
+   Search
+   =========================== */
 .search-form {
   display: flex;
   gap: 0.5rem;
@@ -257,67 +370,31 @@
   outline: none;
 }
 
-/* Auth Header */
-.auth-header {
-  background-color: var(--pastel-green);
-}
-
-.navbar-links li form.logout-form {
-  margin: 0;
-}
-
-.btn-logout {
-  background-color: transparent;
-  border: 2px solid #333;
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #333;
-  transition: background-color 0.25s ease;
-}
-
-.btn-logout:hover {
-  background-color: #9ad8a3;
-  border-color: #9ad8a3;
-  color: #222;
-}
-
-.navbar-links li a {
-  text-decoration: none;
-  color: #222;
-  padding: 0.5rem 0.75rem;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
-}
-
-.navbar-links li a:hover {
-  background-color: var(--pastel-yellow);
-}
-
-/* User Banner */
+/* ===========================
+   User Banner
+   =========================== */
 .user-banner {
   position: fixed;
   top: 1rem;
   right: 1rem;
   background-color: var(--pastel-yellow);
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
+  padding: 1rem;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   max-width: 250px;
   font-size: 0.9rem;
   color: #333;
-  z-index: 1000;
+  flex-shrink: 0; /* keep fixed width */
+  text-align: left; /* aligns text nicely */
 }
 
 .user-info p {
   margin: 0.3rem 0;
-  line-height: 1.2;
+  font-size: 0.9rem;
 }
 
 .edit-icon {
   display: inline-block;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
   font-size: 1.25rem;
   color: #555;
   text-decoration: none;
@@ -325,15 +402,72 @@
   transition: color 0.2s ease;
 }
 
-.edit-icon:hover,
-.edit-icon:focus {
+.edit-icon:hover {
   color: var(--pastel-red);
-  outline: none;
 }
 
-/* User Dashboard */
+/* Ensure banner stays on right side for larger screens */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .user-banner {
+    max-width: 100%;
+  }
+}
+/* ===========================
+   Reviews
+   =========================== */
+.review-item {
+  display: block;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s ease;
+}
+
+.review-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.review-book-cover {
+  display: block; /* helps with margin and scaling */
+  width: 100%;
+  height: auto;
+  max-width: 100px;
+  max-height: 150px;
+  object-fit: contain; /* ensures no cropping */
+  border-radius: 5px;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Dashboard Review Buttons */
 .add-review-buttons {
   display: flex;
+  align-items: stretch; /* makes children take full height */
   flex-wrap: wrap;
   gap: 0.5rem;
   max-height: 200px;
@@ -355,10 +489,9 @@
   background-color: var(--pastel-green);
 }
 
-
-/* User Form */
-
-
+/* ===========================
+   Search Results
+   =========================== */
 .search-results {
   display: flex;
   gap: 20px;
@@ -385,19 +518,12 @@
   color: #333;
 }
 
-/* Book item styling */
+/* Book Items */
 .book-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
-}
-
-.book-item img {
-  width: 60px;
-  height: auto;
-  border-radius: 5px;
-  object-fit: cover;
 }
 
 .book-item h3 {
@@ -411,7 +537,7 @@
   margin: 0;
 }
 
-/* User item styling */
+/* User Items */
 .user-item {
   padding: 8px;
   background: #fff;
@@ -429,4 +555,142 @@
   font-size: 1rem;
   margin: 0;
   color: #444;
+}
+
+/* ===========================
+   Theme Grid
+   =========================== */
+.pastel-blue { background-color: var(--pastel-blue); }
+.pastel-green { background-color: var(--pastel-green); }
+.pastel-yellow { background-color: var(--pastel-yellow); }
+.pastel-pink { background-color: var(--pastel-pink); }
+.pastel-purple { background-color: var(--pastel-purple); }
+.pastel-orange { background-color: var(--pastel-orange); }
+.pastel-red { background-color: var(--pastel-red); }
+.pastel-gray { background-color: var(--pastel-gray); }
+.pastel-brown { background-color: var(--pastel-brown); }
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.theme-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+  height: 50px;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.theme-box input[type="radio"] { display: none; }
+
+.theme-box span {
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+.theme-box:has(input[type="radio"]:checked) {
+  border: 2px solid #222;
+  box-shadow: 0 0 0 2px #2222;
+}
+
+.theme-box:hover {
+  border: 2px solid #888;
+  box-shadow: 0 2px 8px 0 #8882;
+}
+
+@media (max-width: 600px) {
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===========================
+   Pagination
+   =========================== */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.pagination-info {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #555;
+  text-align: center;
+}
+
+/* ===========================
+   Container
+   =========================== */
+.container {
+  width: 90vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1500px;
+  }
+}
+
+/* User Dashboard */
+.dashboard-container {
+  display: flex;
+  gap: 2rem; /* space between main content and sidebar */
+  align-items: flex-start;
+}
+
+/* Main sections take up available width except sidebar */
+.reviews-section, 
+.add-review-section {
+  flex: 1;
+}
+
+/* Book Form */
+.book-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.book-form .form-group input,
+.book-form .form-group select,
+.book-form .form-group textarea {
+  width: 100%;       /* Makes all fields full width of container */
+  padding: 0.6rem;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.book-form .isbn-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.book-form .isbn-container input {
+  flex: 1;           /* Take all available space next to button */
+}
+
+.book-form .isbn-container button {
+  flex-shrink: 0;
 }

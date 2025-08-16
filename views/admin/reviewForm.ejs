@@ -1,23 +1,23 @@
 <main class="form-container">
-  <h2 class="form-title"><%= review ? 'Edit Review' : 'Add Review' %></h2>
+  <h2 class="form-title"><%= locals.review ? 'Edit Review' : 'Add Review' %></h2>
 
   <% if (error) { %>
     <p class="form-error"><%= error %></p>
   <% } %>
 
   <form
-    action="<%= review ? '/auth/edit-review' : '/auth/add-review' %>"
+    action="<%= locals.review ? '/auth/edit-review' : '/auth/add-review' %>"
     method="POST"
     class="form"
   >
-  <% if (review) { %>
+  <% if (locals.review) { %>
       <input type="hidden" name="review_id" value="<%= review.review_id %>" />
     <% } %>
 
     <input type="hidden" name="user_id" value="<%= user.user_id %>" />
 
     <label for="book">Book</label>
-    <% if (review) { %>
+    <% if (locals.review) { %>
       <!-- Show book title readonly when editing -->
       <input
         type="text"

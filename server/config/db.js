@@ -1,5 +1,5 @@
 import pg from "pg";
-import './server/config/db.js';
+import './config.js';
 
 const db = new pg.Client({
   user: process.env.PG_USER,

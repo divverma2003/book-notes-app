@@ -16,34 +16,53 @@
         <input type="password" name="password" id="password" required placeholder="Create a password">
 
         <label for="phone">Phone (optional)</label>
-        <input type="tel" name="phone" id="phone" placeholder="(555) 123-4567">
+        <input type="tel" name="phone_number" id="phone_number" placeholder="(555) 123-4567">
 
         <label for="about">About You</label>
         <textarea name="about" id="about" rows="3" placeholder="Tell us something about yourself"></textarea>
 
         <label for="favorite_book">Favorite Book</label>
-        <select name="favorite_book" id="favorite_book" required>
-        <option value="" disabled selected>Select a book</option>
-        <% books.forEach(book => { %>
-            <option value="<%= book.book_id %>"><%= book.title %></option>
-        <% }) %>
+        <select name="favorite_book_id" id="favorite_book_id">
+        <option value="" disabled selected><%= locals.books ? 'Select a book' : 'No books available' %></option>
+        <% if (locals.books) { %>
+            <% books.forEach(book => { %>
+                <option value="<%= book.book_id %>"><%= book.title %></option>
+            <% }) %>
+        <% } %>
         </select>
 
-        <label for="theme_color">Dashboard Theme</label>
-        <select name="theme_color" id="theme_color" required>
-        <option value="" disabled selected>Select a color palette</option>
-        <option value="pastel-blue">Pastel Blue</option>
-        <option value="pastel-green">Pastel Green</option>
-        <option value="pastel-yellow">Pastel Yellow</option>
-        <option value="pastel-pink">Pastel Pink</option>
-        <option value="pastel-purple">Pastel Purple</option>
-        <option value="pastel-orange">Pastel Orange</option>
-        <option value="pastel-red">Pastel Red</option>
-        <option value="pastel-gray">Pastel Gray</option>
-        <option value="pastel-brown">Pastel Brown</option>
-        </select>
+        <label for="user_color">Dashboard Theme</label>
+        <div class="theme-grid">
+            <label class="theme-box pastel-blue">
+                <input type="radio" name="user_color" value="pastel-blue" required>
+            </label>
+            <label class="theme-box pastel-green">
+                <input type="radio" name="user_color" value="pastel-green">
+            </label>
+            <label class="theme-box pastel-yellow">
+                <input type="radio" name="user_color" value="pastel-yellow">
+            </label>
+            <label class="theme-box pastel-pink">
+                <input type="radio" name="user_color" value="pastel-pink">
+            </label>
+            <label class="theme-box pastel-purple">
+                <input type="radio" name="user_color" value="pastel-purple">
+            </label>
+            <label class="theme-box pastel-orange">
+                <input type="radio" name="user_color" value="pastel-orange">
+            </label>
+            <label class="theme-box pastel-red">
+                <input type="radio" name="user_color" value="pastel-red">
+            </label>
+            <label class="theme-box pastel-gray">
+                <input type="radio" name="user_color" value="pastel-gray">
+            </label>
+            <label class="theme-box pastel-brown">
+                <input type="radio" name="user_color" value="pastel-brown">
+            </label>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-primary btn-center">Sign Up</button>
     </form>
     <p class="form-footer-text">
         Already have an account? <a href="/login">Login here</a>

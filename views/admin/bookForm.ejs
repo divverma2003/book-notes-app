@@ -1,100 +1,131 @@
 <main class="form-container">
-  <h2 class="form-title"><%= book ? 'Edit Book' : 'Add Book' %></h2>
+  <h2 class="form-title"><%= locals.book ? 'Edit Book' : 'Add Book' %></h2>
 
-  <% if (error) { %>
-    <p class="form-error"><%= error %></p>
-  <% } %>
 
-    <form
-      action="<%= book ? '/auth/edit-book' : '/auth/add-book' %>"
-      method="POST"
-      class="form"
-      >
-      <% if (book) { %>
-        <input type="hidden" name="book_id" value="<%= book.book_id %>" />
-      <% } %>
+  <!-- Feedback div for ISBN validation -->
+  <div id="isbn-feedback"></div>
 
-    <label for="isbn13">ISBN-13</label>
-    <input
-      type="text"
-      id="isbn13"
-      name="isbn13"
-      value="<%= book ? book.isbn13 : '' %>"
-      maxlength="13"
-      pattern="\d{13}"
-      required
-      placeholder="13-digit ISBN"
-    />
+  <form action="<%= locals.book ? `/auth/${locals.book.book_id}/edit-book` : '/auth/add-book' %>" method="POST" class="book-form">
+    <% if (locals.book) { %>
+      <input type="hidden" name="book_id" value="<%= locals.book.book_id %>" />
+    <% } %>
 
-    <label for="title">Title</label>
-    <input
-      type="text"
-      id="title"
-      name="title"
-      value="<%= book ? book.title : '' %>"
-      required
-    />
+    <div class="form-group">
+      <label for="isbn13">ISBN-13</label>
+      <div class="isbn-container">
+        <input
+          type="text"
+          id="isbn13"
+          name="isbn13"
+          value="<%= locals.book ? locals.book.isbn13 : '' %>"
+          maxlength="13"
+          pattern="\d{13}"
+          required
+          placeholder="13-digit ISBN"
+          <%= locals.book ? 'readonly' : '' %>
+        />
+        <% if (!locals.book) { %>
+          <button type="button" id="validate-isbn" class="btn btn-secondary">Validate ISBN</button>
+        <% } %>
+      </div>
+    </div>
 
-    <label for="author">Author</label>
-    <input
-      type="text"
-      id="author"
-      name="author"
-      value="<%= book ? book.author : '' %>"
-      required
-    />
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" value="<%= locals.book ? locals.book.title : '' %>" required />
+    </div>
 
-    <label for="genre">Genre</label>
-    <input
-      type="text"
-      id="genre"
-      name="genre"
-      value="<%= book ? book.genre : '' %>"
-    />
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input type="text" id="author" name="author" value="<%= locals.book ? locals.book.author : '' %>" required />
+    </div>
 
-    <label for="page_count">Page Count</label>
-    <input
-      type="number"
-      id="page_count"
-      name="page_count"
-      min="1"
-      value="<%= book ? book.page_count : '' %>"
-      required
-    />
+    <div class="form-group">
+      <label for="genre">Genre</label>
+      <select id="genre" name="genre" class="select2" required>
+        <option value="">Select a genre</option>
+        <% if (locals.book) { %>
+          <% genres.forEach(genre => { %>
+            <option value="<%= genre %>" <%= genre === locals.book.genre ? 'selected' : '' %>><%= genre %></option>
+          <% }) %>
+        <% } else { %>
+            <option value= '' selected></option>
+        <% } %>
+      </select>
+    </div>
 
-    <label for="summary">Summary</label>
-    <textarea id="summary" name="summary" rows="4"><%= book ? book.summary : '' %></textarea>
+    <div class="form-group">
+      <label for="page_count">Page Count</label>
+      <input type="number" id="page_count" name="page_count" min="1" value="<%= locals.book ? locals.book.page_count : '' %>" required />
+    </div>
 
-    <label for="date_published">Date Published</label>
-    <input
-      type="date"
-      id="date_published"
-      name="date_published"
-      value="<%= book ? book.date_published : '' %>"
-    />
+    <div class="form-group">
+      <label for="summary">Summary</label>
+      <textarea id="summary" name="summary" rows="4"><%= locals.book ? locals.book.summary : '' %></textarea>
+    </div>
 
-    <label for="book_cover">Book Cover URL</label>
-    <input
-      type="url"
-      id="book_cover"
-      name="book_cover"
-      value="<%= book ? book.book_cover : '/img/placeholder.jpg' %>"
-    />
+    <div class="form-group">
+      <label for="date_published">Date Published</label>
+      <input type="date" id="date_published" name="date_published" value="<%= locals.book ? locals.book.date_published : '' %>" />
+    </div>
 
-    <label for="average_rating">Average Rating</label>
-    <input
-      type="number"
-      id="average_rating"
-      name="average_rating"
-      min="0"
-      max="10"
-      step="0.1"
-      value="<%= book ? book.average_rating : 0 %>"
-      readonly
-    />
+    <div class="form-group">
+      <label for="book_cover">Book Cover URL</label>
+      <input type="url" id="book_cover" name="book_cover" value="<%= locals.book ? locals.book.book_cover : '/img/placeholder.jpg' %>" readonly/>
+      <img id="book_cover_preview" src="<%= locals.book ? locals.book.book_cover : '/img/placeholder.jpg' %>" alt="Book Cover Preview" class="review-book-cover"/>
+    </div>
 
-    <button type="submit" class="btn btn-primary">
-      <%= book ? 'Save Changes' : 'Add Book' %>
-    </button>
+    <div class="form-group">
+      <label for="average_rating">Average Rating</label>
+      <input type="number" id="average_rating" name="average_rating" min="0" max="10" step="0.1" value="<%= locals.book ? locals.book.average_rating : 0 %>" readonly />
+    </div>
+
+    <button type="submit" class="btn btn-primary"><%= locals.book ? 'Save Changes' : 'Add Book' %></button>
   </form>
 </main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const isbnInput = document.getElementById('isbn13');
+    const validateButton = document.getElementById('validate-isbn');
+    const bookCoverInput = document.getElementById('book_cover');
+    const bookCoverPreview = document.getElementById('book_cover_preview');
+    const feedback = document.getElementById('isbn-feedback');
+
+    // Initialize Select2
+    $('#genre').select2({ placeholder: 'Select a genre', width: '100%' });
+
+    validateButton.addEventListener('click', async () => {
+      const isbn = isbnInput.value.trim();
+
+      if (!isbn || isbn.length !== 13) {
+        feedback.textContent = 'Please enter a valid 13-digit ISBN.';
+        feedback.className = 'alert alert-danger';
+        return;
+      }
+
+      try {
+        const response = await fetch('/auth/validate-isbn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isbn13: isbn })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          feedback.textContent = 'Book found! Cover URL has been autofilled.';
+          feedback.className = 'alert alert-success';
+          bookCoverInput.value = data.found_url;
+          bookCoverPreview.src = data.found_url;
+        } else {
+          feedback.textContent = data.message || 'Book not found.';
+          feedback.className = 'alert alert-danger';
+        }
+      } catch (err) {
+        console.error('Error validating ISBN:', err);
+        feedback.textContent = 'An error occurred while validating ISBN.';
+        feedback.className = 'alert alert-danger';
+      }
+    });
+  });
+</script>
