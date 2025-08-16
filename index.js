@@ -14,9 +14,7 @@ import db from './server/config/db.js';
 
 
 import publicRoutes from "./server/routes/public.js";
-import userRoutes from "./server/routes/user.js";
 import authRoutes from "./server/routes/auth.js";
-import booksRoutes from "./server/routes/books.js";
 
 const app = express();
 const port = 3000;
@@ -98,8 +96,6 @@ passport.deserializeUser((user, cb) => {
 // Routing Middleware
 app.use('/', publicRoutes);
 app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/books', booksRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -136,9 +136,9 @@ router.get('/user/:user_id', ensureAuthenticated, async (req, res) => {
 router.get('/user/:user_id/edit', ensureAuthenticated, async (req, res) => {
     try {
         const result = await queryBooks("SELECT * FROM books");
-        res.render('register', {
-            title: 'Register',
-            description: 'Create a new account to access your book notes and reviews.',
+        res.render('userForm', {
+            title: 'Edit User',
+            description: 'Update your account information.',
             books: result,
         });
     } catch (error) {
@@ -203,6 +203,89 @@ router.get('/:user_id/add-review', ensureAuthenticated, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+// TODOS:
+// GET: ADD REVIEW
+// GET: EDIT REVIEW
+
+// POST: ADD REVIEW
+// POST: EDIT REVIEW
+// POST: DELETE REVIEW
+
+// POST: EDIT User
+router.post('/user/:user_id/edit', ensureAuthenticated, async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const { name, password, about, phone_number, favorite_book_id, user_color } = req.body;
+
+
+    // Basic validation
+    if (!name) {
+      req.flash('error', 'Please fill in all required fields.');
+      return res.redirect(`/auth/user/${user_id}/edit`);
+    }
+
+    let updatePassword = password ? true : false;
+
+    if (!updatePassword) {
+      // Update user in database
+      const updateQuery = `
+        UPDATE users
+        SET
+          name = $1,
+          email = $2,
+          about = $3,
+          phone_number = $4,
+          favorite_book_id = $5,
+          user_color = $6
+        WHERE user_id = $7
+      `;
+      await db.query(updateQuery, [
+        name,
+        email,
+        about,
+        phone_number,
+        favorite_book_id,
+        user_color,
+        user_id
+      ]);
+
+      req.flash('success', 'User updated successfully!');
+      return res.redirect(`/auth/user/${user_id}`);
+    } else {
+        const hash = await bcrypt.hash(password, saltRounds);
+        const updateQuery = `
+          UPDATE users
+          SET
+            name = $1,
+            email = $2,
+            about = $3,
+            phone_number = $4,
+            favorite_book_id = $5,
+            user_color = $6,
+            password = $7
+          WHERE user_id = $8
+        `;
+        await db.query(updateQuery, [
+          name,
+          email,
+          about,
+          phone_number,
+          favorite_book_id,
+          user_color,
+          hash,
+          user_id
+        ]);
+    }
+
+  } catch (error) {
+    console.error('Error updating user:', error);
+    req.flash('error', 'Server error: Unable to update user.');
+    return res.redirect(`/auth/user/${user_id}/edit`);
+  }
+});
+
+// POST: DELETE USER
 
 // POST: Validate ISBN
 router.post('/validate-isbn', ensureAuthenticated, async (req, res) => {

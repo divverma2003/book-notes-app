@@ -169,7 +169,7 @@ router.post('/login', async (req, res, next) => {
 router.get('/register', async (req, res) => {
     try {
         const result = await queryBooks("SELECT * FROM books");
-        res.render('register', {
+        res.render('userForm', {
             title: 'Register',
             description: 'Create a new account to access your book notes and reviews.',
             books: result,
@@ -217,7 +217,8 @@ router.post('/register', async (req, res) => {
 
   } catch (error) {
     console.error('Error during registration:', error);
-    res.status(500).send('Internal Server Error');
+    req.flash('error', 'An error occurred during registration. Please try again.');
+    res.redirect('/userForm');
   }
 });
 

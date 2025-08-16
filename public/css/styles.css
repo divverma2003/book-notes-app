@@ -664,7 +664,7 @@ textarea:read-only:hover {
 }
 
 /* Book Form */
-.book-form .form-group {
+.book-form .form-group, .user-form .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 1.5rem;
@@ -672,7 +672,10 @@ textarea:read-only:hover {
 
 .book-form .form-group input,
 .book-form .form-group select,
-.book-form .form-group textarea {
+.book-form .form-group textarea,
+.user-form .form-group input,
+.user-form .form-group select,
+.user-form .form-group textarea {
   width: 100%;       /* Makes all fields full width of container */
   padding: 0.6rem;
   font-size: 1rem;
@@ -693,4 +696,46 @@ textarea:read-only:hover {
 
 .book-form .isbn-container button {
   flex-shrink: 0;
+}
+
+/* REQUIRED FIELDS */
+/* Style for required fields */
+.user-form input:required,
+.user-form textarea:required,
+.user-form select:required,
+.book-form input:required,
+.book-form textarea:required,
+.book-form select:required {
+  border: 2px solid #ff6b6b; /* Highlight with a red border */
+  background-color: #fff5f5; /* Light red background */
+}
+
+/* Add focus effect for required fields */
+.user-form input:required:focus,
+.user-form textarea:required:focus,
+.user-form select:required:focus,
+.book-form input:required:focus,
+.book-form textarea:required:focus,
+.book-form select:required:focus,
+.form input:required:focus,
+.form textarea:required:focus,
+.form select:required:focus {
+  border-color: #ff4d4d; /* Darker red border on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); /* Add a subtle glow */
+}
+
+/* Add a label indicator only for required fields */
+.user-form label:has(+ input:required):after,
+.user-form label:has(+ textarea:required):after,
+.user-form label:has(+ select:required):after,
+.form label:has(+ input:required):after,
+.form label:has(+ textarea:required):after,
+.form label:has(+ select:required):after,
+.book-form label:has(+ input:required):after,
+.book-form label:has(+ textarea:required):after,
+.book-form label:has(+ select:required):after {
+  content: ' *'; /* Add an asterisk to required labels */
+  color: #ff6b6b; /* Red color for the asterisk */
+  font-weight: bold;
 }
