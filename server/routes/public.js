@@ -247,10 +247,13 @@ router.get('/users', async (req, res) => {
     }
 
     // Attach review_count and favorite_book_title to each user
-    const usersWithCounts = users.map(user => ({
+    let usersWithCounts = users.map(user => ({
       ...user,
       review_count: reviewCountMap[user.user_id] || 0,
     }));
+
+    // Sort by count (desc)
+    usersWithCounts.sort((a, b) => b.review_count - a.review_count);
 
     // Pagination Logic
     const perPage = 5; // Number of users per page
@@ -262,7 +265,7 @@ router.get('/users', async (req, res) => {
     const hasNextPage = nextPage <= Math.ceil(totalUsers / perPage);
 
     // Paginate users
-    const paginatedUsers = usersWithCounts.slice((page - 1) * perPage, page * perPage);
+    let paginatedUsers = usersWithCounts.slice((page - 1) * perPage, page * perPage);
 
     res.render('users', {
       title: 'User Management',
@@ -337,8 +340,9 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const user_id = req.params.user_id;
     console.log('Fetching user profile for user_id:', user_id);
-    let query = "SELECT name, user_id, email, about, phone_number, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id AND users.user_id = $1";
+    let query = "SELECT name, user_id, email, about, phone_number, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id WHERE users.user_id = $1";
     let userProfile = await queryUsers(query, [user_id]);
+    console.log("All user profiles:", userProfile);
     userProfile = userProfile[0]; // Get the first user profile object
     console.log('User profile fetched:', userProfile);
     // Fetch reviews for user
@@ -355,6 +359,39 @@ router.get('/user/:user_id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).send('Internal Server Error');
+  }
+});
+
+// GET: SPECIFIC REVIEW
+router.get('/user/:user_id/review/:review_id', async (req, res) => {
+  try {
+    const { user_id, review_id } = req.params;
+
+    const reviewResult = await queryReviews(`
+      SELECT r.*, b.title as book_title, b.book_cover, u.name as reviewer_name, u.email as reviewer_email
+      FROM reviews r
+      JOIN books b ON r.book_id = b.book_id
+      JOIN users u ON r.user_id = u.user_id
+      WHERE r.review_id = $1
+    `, [review_id]);
+
+
+    const review = reviewResult[0];
+    if (!review) {
+      req.flash('error', 'Review not found.');
+      return res.redirect('/');
+    }
+
+    res.render('./review', {
+      title: 'Review Details',
+      description: 'View the details of your review.',
+      review,
+      layout: req.user ? 'layouts/auth' : 'layouts/main',
+    });
+  } catch (error) {
+    console.error('Error fetching specific review:', error);
+    req.flash('error', 'Server error: Unable to fetch review.');
+    return res.redirect('/');
   }
 });
 

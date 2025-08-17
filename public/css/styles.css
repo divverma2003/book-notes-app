@@ -370,51 +370,7 @@ textarea:read-only:hover {
   outline: none;
 }
 
-/* ===========================
-   User Banner
-   =========================== */
-.user-banner {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background-color: var(--pastel-yellow);
-  padding: 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  max-width: 250px;
-  font-size: 0.9rem;
-  color: #333;
-  flex-shrink: 0; /* keep fixed width */
-  text-align: left; /* aligns text nicely */
-}
 
-.user-info p {
-  margin: 0.3rem 0;
-  font-size: 0.9rem;
-}
-
-.edit-icon {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 1.25rem;
-  color: #555;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.edit-icon:hover {
-  color: var(--pastel-red);
-}
-
-/* Ensure banner stays on right side for larger screens */
-@media (max-width: 768px) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-  .user-banner {
-    max-width: 100%;
-  }
-}
 /* ===========================
    Reviews
    =========================== */
@@ -450,11 +406,6 @@ textarea:read-only:hover {
   gap: 4px;
 }
 
-.star {
-  font-size: 1.2rem;
-  color: #ccc;
-}
-
 .star.filled {
   color: gold;
 }
@@ -470,7 +421,7 @@ textarea:read-only:hover {
   align-items: stretch; /* makes children take full height */
   flex-wrap: wrap;
   gap: 0.5rem;
-  max-height: 200px;
+  max-height: 75vh;
   overflow-y: auto;
 }
 
@@ -535,6 +486,25 @@ textarea:read-only:hover {
   font-size: 0.9rem;
   color: #666;
   margin: 0;
+}
+
+/* Optional: show books in a responsive grid */
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .books-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .books-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* User Items */
@@ -650,19 +620,6 @@ textarea:read-only:hover {
   }
 }
 
-/* User Dashboard */
-.dashboard-container {
-  display: flex;
-  gap: 2rem; /* space between main content and sidebar */
-  align-items: flex-start;
-}
-
-/* Main sections take up available width except sidebar */
-.reviews-section, 
-.add-review-section {
-  flex: 1;
-}
-
 /* Book Form */
 .book-form .form-group, .user-form .form-group {
   display: flex;
@@ -739,3 +696,348 @@ textarea:read-only:hover {
   color: #ff6b6b; /* Red color for the asterisk */
   font-weight: bold;
 }
+
+.change-password-btn {
+  width: 50%;             /* half width of input */
+  font-size: 0.85rem;      /* slightly smaller text */
+  padding: 0.4rem 0.6rem;  /* smaller padding */
+  margin-bottom: 0.5rem;   /* spacing before input */
+  display: inline-block;
+  border-radius: 6px;
+}
+
+/* MODAL */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+}
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+.modal-content h3 { margin-top: 0; }
+.modal-content .btn { margin: 0.5rem; }
+
+/* DASHBOARD */
+/* Stack dashboard sections vertically under the banner */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* Ensure sections take full width and don’t stretch vertically */
+.reviews-section,
+.add-review-section {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+/* Collapsible */
+.collapsible-toggle {
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+}
+.collapsible-toggle:hover { color: #000; }
+
+/* Search dropdown */
+.search-box {
+  position: relative;
+  max-width: 600px;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.search-dropdown {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 600px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.search-result-item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.search-result-item:last-child { border-bottom: none; }
+
+.search-result-item.empty {
+  grid-template-columns: 1fr;
+  color: #777;
+  text-align: center;
+}
+
+.search-result-item img {
+  width: 48px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
+
+.result-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+.result-info p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.search-result-item .btn.btn-review {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: var(--pastel-blue);
+  border: 2px solid var(--pastel-blue);
+  color: #222;
+  white-space: nowrap;
+}
+.search-result-item .btn.btn-review:hover {
+  background: #7aa6cf;
+  border-color: #7aa6cf;
+  color: #fff;
+}
+
+/* Collapsible */
+.collapsible-toggle {
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+}
+.collapsible-toggle:hover { color: #000; }
+
+/* Search dropdown */
+.search-box {
+  position: relative;
+  max-width: 600px;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.search-dropdown {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 600px;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.search-result-item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.search-result-item:last-child { border-bottom: none; }
+
+.search-result-item.empty {
+  grid-template-columns: 1fr;
+  color: #777;
+  text-align: center;
+}
+
+.search-result-item img {
+  width: 48px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
+
+.result-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+.result-info p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.search-result-item .btn.btn-review {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: var(--pastel-blue);
+  border: 2px solid var(--pastel-blue);
+  color: #222;
+  white-space: nowrap;
+}
+.search-result-item .btn.btn-review:hover {
+  background: #7aa6cf;
+  border-color: #7aa6cf;
+  color: #fff;
+}
+
+/* ==== Reviews Section ==== */
+.reviews-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.review-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+
+.star {
+  color: #ccc;
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+
+.rating-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin-left: 6px;
+}
+
+/* Actions under each review */
+.review-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.review-actions .btn {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* ==== User Banner ==== */
+.user-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.user-banner .user-info {
+  flex: 1;
+}
+
+.user-banner h1 {
+  margin-bottom: 1rem;
+}
+
+.user-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-details li {
+  margin: 0.25rem 0;
+}
+
+.user-banner .btn-edit {
+  margin-left: 2rem;
+  align-self: flex-start;
+}
+
+.review-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Reviewer card styling */
+.reviewer-card {
+  background: #f0f4f8;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.reviewer-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Review Info */
+.review-info img.review-book-cover {
+  max-width: 200px;
+  display: block;
+  margin: 1rem 0;
+}
+
+.review-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-back, .btn-edit, .btn-delete {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-back { background: #6c757d; }
+.btn-edit { background: #007bff; }
+.btn-delete { background: #dc3545; border: none; cursor: pointer; }

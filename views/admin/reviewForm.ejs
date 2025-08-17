@@ -6,7 +6,7 @@
   <% } %>
 
   <form
-    action="<%= locals.review ? '/auth/edit-review' : '/auth/add-review' %>"
+    action="<%= locals.review ? `/auth/${user.user_id}/edit-review/${review.review_id}` : `/auth/${user.user_id}/add-review` %>"
     method="POST"
     class="form"
   >
@@ -16,29 +16,30 @@
 
     <input type="hidden" name="user_id" value="<%= user.user_id %>" />
 
-    <label for="book">Book</label>
-    <% if (locals.review) { %>
-      <!-- Show book title readonly when editing -->
-      <input
-        type="text"
-        id="book"
-        value="<%= review.book_title %>"
-        readonly
-        class="readonly-input"
-      />
-      <input type="hidden" name="book_id" value="<%= review.book_id %>" />
+    <label for="<%= locals.review ? 'book' : 'book_id' %>">Book</label>
+      <% if (locals.review) { %>
+        <!-- Show book title readonly when editing -->
+        <input
+          type="text"
+          id="book"
+          value="<%= review.book_title %>"
+          readonly
+          class="readonly-input"
+        />
+        <input type="hidden" name="book_id" value="<%= review.book_id %>" />
       <% } else { %>
         <!-- On add, let user select book -->
-      <select id="book_id" name="book_id" required>
-        <option value="" disabled selected>Select a book</option>
-        <% books.forEach(book => { %>
-          <option
-            value="<%= book.book_id %>"
-            <%= (book.book_id == preselectedBookId) ? 'selected' : '' %>
-          ><%= book.title %></option>
-        <% }) %>
-      </select>
-    <% } %>
+        <select id="book_id" name="book_id" required>
+          <option value="" disabled <%= locals.book ? '' : 'selected' %>>Select a book</option>
+          <% books.forEach(b => { %>
+            <option
+              value="<%= b.book_id %>"
+              <%= locals.book && String(b.book_id) === String(locals.book.book_id) ? 'selected' : '' %>>
+              <%= b.title %>
+            </option>
+          <% }) %>
+        </select>
+      <% } %>
 
     <label for="rating">Rating (1-10)</label>
     <input
@@ -48,7 +49,7 @@
       min="1"
       max="10"
       required
-      value="<%= review ? review.rating : '' %>"
+      value="<%= locals.review ? review.rating : '' %>"
     />
 
     <label for="short_description">Short Description</label>
@@ -58,19 +59,19 @@
       name="short_description"
       maxlength="255"
       required
-      value="<%= review ? review.short_description : '' %>"
+      value="<%= locals.review ? review.short_description : '' %>"
     />
 
-    <label for="long_description">Long Description (optional)</label>
+    <label for="long_description">Long Description</label>
     <textarea
       id="long_description"
       name="long_description"
       rows="5"
       placeholder="Write a detailed review..."
-    ><%= review ? review.long_description : '' %></textarea>
+    ><%= locals.review ? review.long_description : '' %></textarea>
 
     <button type="submit" class="btn btn-primary">
-      <%= review ? 'Save Changes' : 'Add Review' %>
+      <%= locals.review ? 'Save Changes' : 'Add Review' %>
     </button>
     </form>
 </main>

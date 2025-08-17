@@ -21,7 +21,6 @@
             <% if (user) { %>
               <div class="book-actions">
                 <a href="/auth/<%= book.book_id %>/edit-book" class="btn btn-edit" title="Edit Book">✏️ Edit</a>
-                <a href="/auth/<%= user.user_id %>/add-review?book_id=<%= book.book_id %>" class="btn btn-review" title="Add Review for <%= book.title %>">📝 Add Review</a>
               </div>
             <% } %>
           </li>

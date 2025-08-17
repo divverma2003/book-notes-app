@@ -1,0 +1,33 @@
+<main class="review-container">
+  <!-- Reviewer Card -->
+  <section class="reviewer-card">
+    <h3 class="book_title">Reviewer</h3>
+    <p><strong>Name:</strong> <%= review.reviewer_name %></p>
+    <p><strong>Email:</strong> <%= review.reviewer_email %></p>
+  </section>
+
+  <!-- Review Info -->
+  <section class="review-info">
+    <h1><%= review.book_title %></h1>
+
+    <div class="star-rating">
+      <% 
+        let stars = Math.round(review.rating / 2);
+        for (let i = 1; i <= 5; i++) { 
+      %>
+        <span class="<%= i <= stars ? 'star filled' : 'star' %>">&#9733;</span>
+      <% } %>
+      <span class="rating-text">(<%= review.rating %>/10)</span>
+    </div>
+
+    <img src="<%= review.book_cover || '/img/placeholder.jpg' %>" alt="Cover of <%= review.book_title %>" class="review-book-cover" />
+
+    <p><strong>Short Description:</strong> <%= review.short_description || 'No short description provided.' %></p>
+    <p><strong>Long Description:</strong> <%= review.long_description || 'No long description provided.' %></p>
+
+    <% if (review.date_created) { %>
+      <p><strong>Reviewed on:</strong> <%= new Date(review.date_created).toLocaleDateString() %></p>
+    <% } %>
+  </section>
+</main>
+<style>

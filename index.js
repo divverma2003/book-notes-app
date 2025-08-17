@@ -28,6 +28,8 @@ app.use(
   })
 );
 
+// TODO:
+// INDEX: ADD GOOGLE AUTH + EMAIL CONFIRMATION + PASSWORD CHANGE CONFIRMATION
 
 // Use Layouts
 app.use(expressEjsLayouts);
