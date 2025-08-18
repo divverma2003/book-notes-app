@@ -1121,3 +1121,25 @@ textarea:read-only:hover {
 .btn-back { background: #6c757d; }
 .btn-edit { background: #007bff; }
 .btn-delete { background: #dc3545; border: none; cursor: pointer; }
+
+/* ALERTS */
+@keyframes fadeSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.alert {
+  animation: fadeSlideOut 1s ease forwards;
+  animation-delay: 5s;
+  margin: 0.5rem 0;
+}
