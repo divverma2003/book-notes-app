@@ -1,7 +1,7 @@
 <main class="review-container">
   <!-- Reviewer Card -->
   <section class="reviewer-card">
-    <h3 class="book_title">Reviewer</h3>
+    <h3>Reviewer</h3>
     <p><strong>Name:</strong> <%= review.reviewer_name %></p>
     <p><strong>Email:</strong> <%= review.reviewer_email %></p>
   </section>
@@ -30,4 +30,20 @@
     <% } %>
   </section>
 </main>
-<style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const deleteBtn = document.getElementById("openDeleteModal");
+    const deleteModal = document.getElementById("deleteModal");
+    const cancelDelete = document.getElementById("cancelDelete");
+
+    if (deleteBtn && deleteModal && cancelDelete) {
+      deleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "flex"; 
+      });
+      cancelDelete.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+      });
+    }
+  });
+</script>

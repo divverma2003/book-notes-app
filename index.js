@@ -12,7 +12,6 @@ import axios from 'axios';
 import './server/config/config.js';
 import db from './server/config/db.js';
 
-
 import publicRoutes from "./server/routes/public.js";
 import authRoutes from "./server/routes/auth.js";
 
@@ -29,7 +28,7 @@ app.use(
 );
 
 // TODO:
-// INDEX: ADD GOOGLE AUTH + EMAIL CONFIRMATION + PASSWORD CHANGE CONFIRMATION
+// INDEX: ADD EMAIL CONFIRMATION + PASSWORD CHANGE CONFIRMATION
 
 // Use Layouts
 app.use(expressEjsLayouts);

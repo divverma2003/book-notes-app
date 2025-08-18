@@ -648,7 +648,7 @@ textarea:read-only:hover {
 }
 
 .book-form .isbn-container input {
-  flex: 1;           /* Take all available space next to button */
+  flex: 1;           
 }
 
 .book-form .isbn-container button {
@@ -656,18 +656,18 @@ textarea:read-only:hover {
 }
 
 /* REQUIRED FIELDS */
-/* Style for required fields */
+
 .user-form input:required,
 .user-form textarea:required,
 .user-form select:required,
 .book-form input:required,
 .book-form textarea:required,
 .book-form select:required {
-  border: 2px solid #ff6b6b; /* Highlight with a red border */
-  background-color: #fff5f5; /* Light red background */
+  border: 2px solid #ff6b6b; 
+  background-color: #fff5f5; 
 }
 
-/* Add focus effect for required fields */
+
 .user-form input:required:focus,
 .user-form textarea:required:focus,
 .user-form select:required:focus,
@@ -677,12 +677,12 @@ textarea:read-only:hover {
 .form input:required:focus,
 .form textarea:required:focus,
 .form select:required:focus {
-  border-color: #ff4d4d; /* Darker red border on focus */
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); /* Add a subtle glow */
+  border-color: #ff4d4d; 
+  outline: none; 
+  box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); 
 }
 
-/* Add a label indicator only for required fields */
+
 .user-form label:has(+ input:required):after,
 .user-form label:has(+ textarea:required):after,
 .user-form label:has(+ select:required):after,
@@ -692,16 +692,16 @@ textarea:read-only:hover {
 .book-form label:has(+ input:required):after,
 .book-form label:has(+ textarea:required):after,
 .book-form label:has(+ select:required):after {
-  content: ' *'; /* Add an asterisk to required labels */
-  color: #ff6b6b; /* Red color for the asterisk */
+  content: ' *'; 
+  color: #ff6b6b; 
   font-weight: bold;
 }
 
 .change-password-btn {
-  width: 50%;             /* half width of input */
-  font-size: 0.85rem;      /* slightly smaller text */
-  padding: 0.4rem 0.6rem;  /* smaller padding */
-  margin-bottom: 0.5rem;   /* spacing before input */
+  width: 50%;             
+  font-size: 0.85rem;      
+  padding: 0.4rem 0.6rem;  
+  margin-bottom: 0.5rem;   
   display: inline-block;
   border-radius: 6px;
 }
