@@ -31,10 +31,10 @@ textarea {
 /* Style for read-only inputs */
 input:read-only,
 textarea:read-only {
-  background-color: #f5f5f5; /* Light grey background */
-  color: #888; /* Slightly greyed-out text */
-  border: 1px dashed #ccc; /* Dashed border to signify non-editable */
-  cursor: not-allowed; /* Change cursor to indicate it's not editable */
+  background-color: #f5f5f5; 
+  color: #888;
+  border: 1px dashed #ccc; 
+  cursor: not-allowed;
 }
 
 /* Add hover effect for clarity */
@@ -62,37 +62,34 @@ textarea:read-only:hover {
 
 /* BRANDING */
 .navbar-logo .navbar-brand {
-  font-size: 1.8rem; /* Increase font size */
-  font-weight: bold; /* Make it bold */
+  font-size: 1.8rem;
+  font-weight: bold;
   color: #222;
-  text-decoration: none; /* Remove underline */
-  text-transform: uppercase; /* Make text uppercase */
-  letter-spacing: 2px; /* Add spacing between letters */
-  position: relative; /* For additional effects */
-  transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
+  text-decoration: none;
+  text-transform: uppercase; 
+  letter-spacing: 2px; 
+  position: relative; 
+  transition: color 0.3s ease, transform 0.3s ease; 
 }
 
-/* Add a subtle text shadow for depth */
 .navbar-logo .navbar-brand {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover effect: Change color and slightly scale up */
 .navbar-logo .navbar-brand:hover {
-  color: var(--pastel-brown); /* Change to another pastel color */
-  transform: scale(1.1); /* Slightly enlarge */
+  color: var(--pastel-brown); 
+  transform: scale(1.1); 
 }
 
-/* Optional: Add a decorative underline effect */
 .navbar-logo .navbar-brand::after {
   content: '';
   position: absolute;
-  bottom: -5px; /* Position below the text */
+  bottom: -5px; 
   left: 0;
   width: 100%;
   height: 3px;
   background: linear-gradient(to right, var(--pastel-brown), #4e7f65);
-  transform: scaleX(0); /* Start hidden */
+  transform: scaleX(0); 
   transform-origin: left;
   transition: transform 0.3s ease;
 }
@@ -101,30 +98,28 @@ textarea:read-only:hover {
 /* Navbar Links Styling */
 .navbar-links {
   display: flex;
-  gap: 1.5rem; /* Slightly more spacing for breathing room */
+  gap: 1.5rem; 
   align-items: center;
 }
 
 .navbar-links li a {
   text-decoration: none;
   color: #222;
-  padding: 0.5rem 1rem; /* More balanced padding */
-  border-radius: 8px; /* Rounded corners for modern look */
-  font-weight: 500; /* Slightly bolder */
+  padding: 0.5rem 1rem; 
+  border-radius: 8px; 
+  font-weight: 500; 
   font-size: 1rem;
   transition: all 0.3s ease;
-  position: relative; /* For underline effect */
+  position: relative;
 }
 
-/* Hover: pastel background with slight lift */
 .navbar-links li a:hover {
   background-color: var(--pastel-yellow);
-  color: #000; /* Better contrast */
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  color: #000; 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-/* Optional: animated underline on hover */
 .navbar-links li a::after {
   content: '';
   position: absolute;
@@ -172,6 +167,7 @@ textarea:read-only:hover {
   padding: 1.5rem;
   flex-direction: column;
   gap: 1.5rem;
+  margin-top: 1.5rem;
   align-items: stretch;
 }
 
@@ -308,11 +304,11 @@ textarea:read-only:hover {
    Forms
    =========================== */
 .form-container {
-  max-width: 800px;    /* Makes the form container larger */
-  width: 90%;          /* Responsive width */
-  margin: 2rem auto;   /* Center it vertically with some spacing */
+  max-width: 800px;    
+  width: 90%;          
+  margin: 2rem auto;   
   padding: 2rem;
-  background-color: #f9f9f9; /* Light background */
+  background-color: #f9f9f9; 
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -442,7 +438,7 @@ textarea:read-only:hover {
 }
 
 .review-book-cover {
-  display: block; /* helps with margin and scaling */
+  display: block; 
   width: 100%;
   height: auto;
   max-width: 100px;
@@ -469,7 +465,7 @@ textarea:read-only:hover {
 /* Dashboard Review Buttons */
 .add-review-buttons {
   display: flex;
-  align-items: stretch; /* makes children take full height */
+  align-items: stretch; 
   flex-wrap: wrap;
   gap: 0.5rem;
   max-height: 75vh;
@@ -542,7 +538,6 @@ textarea:read-only:hover {
   margin: 0;
 }
 
-/* Optional: show books in a responsive grid */
 .books-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columns */
@@ -570,9 +565,9 @@ textarea:read-only:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   display: flex;
-  flex-direction: column; /* stack children vertically */
+  flex-direction: column; 
   align-items: flex-start;
-  gap: 6px; /* space between h3 and p elements */
+  gap: 6px; 
 }
 
 .user-item:hover {
@@ -703,7 +698,7 @@ textarea:read-only:hover {
 .user-form .form-group input,
 .user-form .form-group select,
 .user-form .form-group textarea {
-  width: 100%;       /* Makes all fields full width of container */
+  width: 100%;       
   padding: 0.6rem;
   font-size: 1rem;
   margin-bottom: 5px;
@@ -797,7 +792,6 @@ textarea:read-only:hover {
 .modal-content .btn { margin: 0.5rem; }
 
 /* DASHBOARD */
-/* Stack dashboard sections vertically under the banner */
 .dashboard-container {
   background-color: var(--pastel-green);
   display: flex;
@@ -808,7 +802,6 @@ textarea:read-only:hover {
   align-items: stretch;
 }
 
-/* Ensure sections take full width and don’t stretch vertically */
 .reviews-section,
 .add-review-section {
   flex: 0 0 auto;
@@ -1068,30 +1061,43 @@ textarea:read-only:hover {
 }
 
 .review-container {
-  max-width: 800px;
   margin: 2rem auto;
   padding: 1.5rem;
-  background: #fff;
+  background: var(--pastel-blue);
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
 }
 
 /* Reviewer card styling */
 .reviewer-card {
-  background: #f0f4f8;
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background: var(--pastel-yellow);
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 0; 
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Hover effect for cards */
+.reviewer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Header styling */
 .reviewer-card h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  color: #222;
 }
 
+.review-info {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0 0;
+}
 /* Review Info */
 .review-info img.review-book-cover {
   max-width: 200px;
