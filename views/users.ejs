@@ -6,7 +6,7 @@
   <% } else { %>
     <ul class="users-list">
       <% users.forEach(u => { %>
-        <li class="user-item" style ="--user-color: <%= u.user_color || '#a2c2e0' %>">
+        <li class="user-item" style ="--user-color: var(--<%= u.user_color || 'pastel-blue' %>);">
           <a href="/user/<%= u.user_id %>" class="user-header">
             <h2><%= u.name %> <% if (user) { %> (<%= u.email %>) <% } %></h2>
           </a>

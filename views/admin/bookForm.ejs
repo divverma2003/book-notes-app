@@ -44,12 +44,13 @@
       <label for="genre">Genre</label>
       <select id="genre" name="genre" class="select2" required>
         <option value="">Select a genre</option>
-        <% if (locals.book) { %>
+        <% if (genres && genres.length > 0) { %>
           <% genres.forEach(genre => { %>
-            <option value="<%= genre %>" <%= genre === locals.book.genre ? 'selected' : '' %>><%= genre %></option>
+            <option 
+              value="<%= genre %>" 
+              <%= locals.book && locals.book.genre === genre ? 'selected' : '' %>
+            ><%= genre %></option>
           <% }) %>
-        <% } else { %>
-            <option value= '' selected></option>
         <% } %>
       </select>
     </div>

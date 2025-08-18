@@ -85,6 +85,11 @@ const validateAndFetchBook = async (isbn) => {
 // Helper function: render user dashboard
 async function renderUserDashboard(req, res) {
   try {
+    if (!req.user) {
+      req.flash('error', 'Please log in to view your dashboard.');
+      return res.redirect('/login');
+    }
+
     const userId = req.user.user_id;
 
     // Fresh query: user info + favorite book
@@ -131,6 +136,8 @@ async function renderUserDashboard(req, res) {
       ...userProfile,
       review_count: parseInt(reviewCount, 10),
     };
+
+    console.log(userWithCounts.user_color);
 
     // Render the dashboard with fresh data
     res.render('./admin/userDashboard', {
@@ -369,9 +376,9 @@ router.post('/:book_id/edit-book', ensureAuthenticated, async (req, res) => {
 // GET: ADD REVIEW
 router.get('/:user_id/add-review', ensureAuthenticated, async (req, res) => {
   try {
+    const { user_id } = req.params;
     // get books not reviewed by user
     const books = await queryBooks('SELECT * FROM books WHERE book_id NOT IN (SELECT book_id FROM reviews WHERE user_id = $1)', [user_id]);
-    const { user_id } = req.params;
     const user = await queryUsers('SELECT * FROM users WHERE user_id = $1', [user_id]);
     res.render('./admin/reviewForm', {
       title: 'Add Book',

@@ -1,4 +1,4 @@
-<main class="user-profile-container" style ="--user-color: <%= userProfile.user_color || '#a2c2e0' %>;">
+<main class="user-profile-container" style ="--user-color: var(--<%= userProfile.user_color || 'pastel-yellow' %>);">
   <section class="user-info">
     <h1><%= userProfile.name %></h1>
     <p><strong>Email:</strong> <%= userProfile.email %></p>

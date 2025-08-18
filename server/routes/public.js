@@ -91,11 +91,15 @@ router.get('/', async (req, res) => {
             `;
             const userReviews = await queryReviews(query, [user_id]);
 
+            const books = await queryBooks('SELECT * FROM books WHERE book_id NOT IN (SELECT book_id FROM reviews WHERE user_id = $1)', [user_id]);
+
+
             // Render user dashboard
             return res.render('./admin/userDashboard', {
                 title: 'User Dashboard',
                 description: 'Manage your book notes and reviews.',
                 userProfile: user,
+                books,
                 reviews: userReviews,
                 layout: 'layouts/auth',
             });
