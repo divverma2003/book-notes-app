@@ -1,4 +1,4 @@
-# 📚 Book Notes Tracker Capstone Project
+# Book Notes Tracker Capstone Project
 ---
 
 ## Features
