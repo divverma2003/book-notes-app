@@ -1,6 +1,11 @@
 # Book Notes Tracker Capstone Project
 ---
-
+## Requirements:
+Developed using the guidelines set by Dr. Angela Yu's Full Stack Web Development Course's "Book Notes" Capstone Project. 
+The goals of this app are listed below:
+1. Revise how to integrate public APIs into web projects.
+2. Gain more experience using Express/Node.js for server-side programming.
+3. Demonstrate ability to Create Read Update and Delete data in a PostgreSQL Database to persist data.
 ## Features
 
 ### User Authentication
