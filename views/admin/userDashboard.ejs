@@ -1,6 +1,5 @@
-<main class="dashboard-container">
-  <!-- User Banner -->
-  <section class="user-banner">
+      <!-- User Banner -->
+    <section class="user-banner" style ="--user-color: <%= user.user_color || '#a2c2e0' %>;">
     <div class="user-info">
       <h1><%= user.name %>’s Dashboard</h1>
       <ul class="user-details">
@@ -16,7 +15,7 @@
     </div>
     <a href="/auth/user/<%= user.user_id %>/edit" class="btn btn-edit" title="Edit Profile">✏️ Edit Profile</a>
   </section>
-
+<main class="dashboard-container" >
   <!-- Add Review Section -->
   <section class="add-review-section">
     <h2>

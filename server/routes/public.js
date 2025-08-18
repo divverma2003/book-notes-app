@@ -340,7 +340,7 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const user_id = req.params.user_id;
     console.log('Fetching user profile for user_id:', user_id);
-    let query = "SELECT name, user_id, email, about, phone_number, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id WHERE users.user_id = $1";
+    let query = "SELECT name, user_id, email, about, phone_number, user_color, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id WHERE users.user_id = $1";
     let userProfile = await queryUsers(query, [user_id]);
     console.log("All user profiles:", userProfile);
     userProfile = userProfile[0]; // Get the first user profile object

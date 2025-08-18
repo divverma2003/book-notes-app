@@ -84,24 +84,23 @@
             </select>
         </div>
 
-        <input type="hidden" name="user_color" value="<%= locals.user ? locals.user.user_color : '' %>">
-
         <div class="form-group">
             <label for="user_color">Dashboard Theme</label>
-            <div class="theme-grid">
-                <% const colors = ['pastel-blue', 'pastel-green', 'pastel-yellow', 'pastel-pink', 'pastel-purple', 'pastel-orange', 'pastel-red', 'pastel-gray', 'pastel-brown']; %>
-                <% colors.forEach(color => { %>
+                <div class="theme-grid">
+                    <% const colors = ['pastel-blue', 'pastel-green', 'pastel-yellow', 'pastel-pink', 'pastel-purple', 'pastel-orange', 'pastel-red', 'pastel-gray', 'pastel-brown']; %>
+                    <% colors.forEach(color => { %>
                     <label class="theme-box <%= color %>">
                         <input 
-                            type="radio" 
-                            name="user_color" 
-                            value="<%= color %>" 
-                            <%= locals.user && locals.user.user_color === color ? 'checked' : '' %>
+                        type="radio" 
+                        name="user_color" 
+                        value="<%= color %>" 
+                        <%= (locals.user && locals.user.user_color === color) || (!locals.user && color === 'pastel-blue') ? 'checked' : '' %>
                         />
                     </label>
                 <% }) %>
             </div> 
         </div>
+
 
         <button type="submit" class="btn btn-primary btn-center"><%= locals.user ? 'Save Changes' : 'Sign Up' %></button>
     </form>

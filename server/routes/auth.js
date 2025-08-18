@@ -89,7 +89,7 @@ async function renderUserDashboard(req, res) {
 
     // Fresh query: user info + favorite book
     let query = `
-      SELECT u.user_id, u.name, u.email, u.about, u.phone_number,
+      SELECT u.user_id, u.name, u.email, u.about, u.phone_number, u.user_color,
              b.title AS favorite_book_title
       FROM users u
       LEFT JOIN books b ON u.favorite_book_id = b.book_id
