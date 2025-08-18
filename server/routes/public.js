@@ -236,7 +236,6 @@ router.get('/users', async (req, res) => {
   try {
     let query = "SELECT name, user_id, email, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id";
     const users = await queryUsers(query);
-    console.log('Users fetched:', users);
     // Fetch review count for each user
     query = 'SELECT user_id, COUNT(*) as review_count FROM reviews GROUP BY user_id';
     const reviewCounts = await queryReviews(query);
@@ -343,12 +342,9 @@ router.post('/logout', (req, res) => {
 router.get('/user/:user_id', async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    console.log('Fetching user profile for user_id:', user_id);
     let query = "SELECT name, user_id, email, about, phone_number, user_color, title AS favorite_book_title FROM users LEFT JOIN books ON users.favorite_book_id = books.book_id WHERE users.user_id = $1";
     let userProfile = await queryUsers(query, [user_id]);
-    console.log("All user profiles:", userProfile);
     userProfile = userProfile[0]; // Get the first user profile object
-    console.log('User profile fetched:', userProfile);
     // Fetch reviews for user
     query = 'SELECT *, title AS book_title FROM reviews JOIN books ON reviews.book_id = books.book_id WHERE user_id = $1';
     const userReviews = await queryReviews(query, [user_id]);

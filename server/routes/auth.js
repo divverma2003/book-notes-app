@@ -137,8 +137,6 @@ async function renderUserDashboard(req, res) {
       review_count: parseInt(reviewCount, 10),
     };
 
-    console.log(userWithCounts.user_color);
-
     // Render the dashboard with fresh data
     res.render('./admin/userDashboard', {
       title: 'Your Dashboard',
