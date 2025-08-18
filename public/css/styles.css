@@ -97,30 +97,67 @@ textarea:read-only:hover {
   transition: transform 0.3s ease;
 }
 
-/* Reveal underline on hover */
-.navbar-logo .navbar-brand:hover::after {
-  transform: scaleX(1); /* Expand underline */
-}
 
+/* Navbar Links Styling */
 .navbar-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem; /* Slightly more spacing for breathing room */
+  align-items: center;
 }
 
 .navbar-links li a {
   text-decoration: none;
   color: #222;
-  padding: 0.5rem 0.75rem;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
+  padding: 0.5rem 1rem; /* More balanced padding */
+  border-radius: 8px; /* Rounded corners for modern look */
+  font-weight: 500; /* Slightly bolder */
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative; /* For underline effect */
 }
 
+/* Hover: pastel background with slight lift */
 .navbar-links li a:hover {
   background-color: var(--pastel-yellow);
+  color: #000; /* Better contrast */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.navbar-links li form.logout-form {
-  margin: 0;
+/* Optional: animated underline on hover */
+.navbar-links li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, var(--pastel-brown), var(--pastel-green));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.navbar-links li a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Logout form adjustments */
+.navbar-links li form.logout-form button {
+  all: unset; /* Remove default button styles */
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  background-color: var(--pastel-red);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.navbar-links li form.logout-form button:hover {
+  background-color: var(--pastel-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* Auth Header */
